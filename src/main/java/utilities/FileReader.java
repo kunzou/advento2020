@@ -27,4 +27,31 @@ public class FileReader {
     return input;
   }
 
+  public static List<String> readToListSeparatedByEmptyLine(String fileName) {
+    List<String> input = new ArrayList<>();
+
+    try {
+      InputStream resource = new ClassPathResource(fileName).getInputStream();
+      BufferedReader reader = new BufferedReader(new InputStreamReader(resource));
+
+      String currentLine = null;
+      StringBuilder passport = new StringBuilder();
+      while ((currentLine = reader.readLine()) != null) {
+        if(!"".equals(currentLine)) {
+          passport.append(currentLine);
+          passport.append(" ");
+        }
+        else {
+          input.add(passport.toString());
+          passport = new StringBuilder();
+        }
+      }
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    return input;
+  }
+
 }
