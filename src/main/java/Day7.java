@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public class Day7 {
 
   public static void solve() {
-    System.out.println(new Day7().part2());
+    System.out.println(new Day7().part1());
   }
 
   private int part1() {
@@ -32,7 +32,7 @@ public class Day7 {
       count = bags.size();
     }
 
-    return -1;
+    return count;
   }
 
   private String getBagName(String bag) {
