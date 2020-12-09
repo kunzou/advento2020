@@ -49,26 +49,24 @@ public class Day9 {
       .map(Long::parseLong)
       .collect(Collectors.toList());
 
-    for (int i = 0; i < numbers.size(); i++) {
-      for(int j = i+1; j < numbers.size(); j++) {
-        List<Long> range = numbers.subList(i, j);
-        Long sum = getSum(range);
-        if(sum.equals(target)) {
-          Long max = range.stream().max(Comparator.comparing(a->a)).get();
-          Long min = range.stream().min(Comparator.comparing(a->a)).get();
+    int left = 0;
+    int right = 1;
+    Long sum = numbers.get(left) + numbers.get(right);
 
-          return min+max;
-        }
-        else if(sum > target) {
-          break;
-        }
+    while(!sum.equals(target)) {
+      if(sum < target) {
+        right ++;
+        sum += numbers.get(right);
+      }
+      else if(sum > target) {
+        sum -= numbers.get(left);
+        left ++;
       }
     }
 
-    return null;
-  }
+    Long max = numbers.subList(left, right).stream().max(Comparator.comparing(a->a)).get();
+    Long min = numbers.subList(left, right).stream().min(Comparator.comparing(a->a)).get();
 
-  private Long getSum(List<Long> numbers) {
-    return numbers.stream().reduce(0L, Long::sum);
+    return min+max;
   }
 }
